@@ -1,958 +1,164 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FreshCatch - Premium Fish Market</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Ornamental Fish Showcase</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --primary-color: #0077be;
-            --secondary-color: #00a8ff;
-            --accent-color: #ff6b35;
-            --text-dark: #2c3e50;
-            --text-light: #7f8c8d;
-            --bg-light: #f8f9fa;
-            --success-color: #27ae60;
-            --warning-color: #f39c12;
-            --danger-color: #e74c3c;
-            --shadow: 0 4px 6px rgba(0,0,0,0.1);
-            --border-radius: 8px;
-        }
-
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: var(--text-dark);
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
+            font-family: Arial, sans-serif;
+            background: #e0f7fa;
+            margin: 0;
+            padding: 20px;
+            color: #004d40;
         }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        /* Header Styles */
         header {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-            box-shadow: var(--shadow);
-        }
-
-        .header-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem 0;
-        }
-
-        .logo {
-            font-size: 2rem;
-            font-weight: bold;
-            color: var(--primary-color);
-            text-decoration: none;
-        }
-
-        .cart-icon {
-            position: relative;
-            background: var(--primary-color);
-            color: white;
-            border: none;
-            padding: 12px 20px;
-            border-radius: var(--border-radius);
-            cursor: pointer;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-        }
-
-        .cart-icon:hover {
-            background: var(--secondary-color);
-            transform: translateY(-2px);
-        }
-
-        .cart-count {
-            position: absolute;
-            top: -8px;
-            right: -8px;
-            background: var(--accent-color);
-            color: white;
-            border-radius: 50%;
-            width: 24px;
-            height: 24px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.8rem;
-            font-weight: bold;
-        }
-
-        /* Main Content */
-        main {
-            margin-top: 100px;
-            padding: 2rem 0;
-        }
-
-        /* Hero Section */
-        .hero {
             text-align: center;
-            padding: 4rem 0;
-            margin-bottom: 3rem;
+            margin-bottom: 30px;
         }
-
-        .hero h1 {
-            font-size: 3.5rem;
-            color: white;
-            margin-bottom: 1rem;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 5px;
         }
-
-        .hero p {
-            font-size: 1.3rem;
-            color: rgba(255,255,255,0.9);
-            margin-bottom: 2rem;
-        }
-
-        /* Filter Section */
-        .filter-section {
-            background: white;
-            padding: 2rem;
-            border-radius: var(--border-radius);
-            margin-bottom: 2rem;
-            box-shadow: var(--shadow);
-        }
-
-        .filter-controls {
-            display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .filter-btn {
-            padding: 10px 20px;
-            border: 2px solid var(--primary-color);
-            background: white;
-            color: var(--primary-color);
-            border-radius: var(--border-radius);
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-weight: 500;
-        }
-
-        .filter-btn:hover,
-        .filter-btn.active {
-            background: var(--primary-color);
-            color: white;
-        }
-
-        /* Product Grid */
-        .product-grid {
+        .fish-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-bottom: 3rem;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
         }
-
-        .product-card {
-            background: white;
-            border-radius: var(--border-radius);
+        .fish-card {
+            background: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
             overflow: hidden;
-            box-shadow: var(--shadow);
-            transition: all 0.3s ease;
-            position: relative;
+            transition: transform 0.3s ease;
         }
-
-        .product-card:hover {
+        .fish-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
         }
-
-        .product-image {
+        img {
             width: 100%;
-            height: 250px;
+            height: 180px;
             object-fit: cover;
-            transition: transform 0.3s ease;
         }
-
-        .product-card:hover .product-image {
-            transform: scale(1.05);
-        }
-
-        .product-info {
-            padding: 1.5rem;
-        }
-
-        .product-name {
-            font-size: 1.3rem;
-            font-weight: bold;
-            margin-bottom: 0.5rem;
-            color: var(--text-dark);
-        }
-
-        .product-price {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: var(--primary-color);
-            margin-bottom: 0.5rem;
-        }
-
-        .product-description {
-            color: var(--text-light);
-            margin-bottom: 1rem;
-            font-size: 0.9rem;
-        }
-
-        .product-specialties {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .specialty-tag {
-            background: var(--bg-light);
-            color: var(--text-dark);
-            padding: 0.3rem 0.8rem;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 500;
-        }
-
-        .quantity-controls {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            margin-bottom: 1rem;
-        }
-
-        .quantity-btn {
-            width: 35px;
-            height: 35px;
-            border: 2px solid var(--primary-color);
-            background: white;
-            color: var(--primary-color);
-            border-radius: 50%;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            transition: all 0.3s ease;
-        }
-
-        .quantity-btn:hover {
-            background: var(--primary-color);
-            color: white;
-        }
-
-        .quantity-display {
-            font-weight: bold;
-            font-size: 1.1rem;
-            min-width: 30px;
-            text-align: center;
-        }
-
-        .add-to-cart-btn {
-            width: 100%;
-            padding: 12px;
-            background: var(--accent-color);
-            color: white;
-            border: none;
-            border-radius: var(--border-radius);
-            cursor: pointer;
-            font-size: 1rem;
-            font-weight: bold;
-            transition: all 0.3s ease;
-        }
-
-        .add-to-cart-btn:hover {
-            background: #e55a2b;
-            transform: translateY(-2px);
-        }
-
-        /* Cart Modal */
-        .cart-modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0,0,0,0.5);
-            z-index: 2000;
-            display: none;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .cart-modal.show {
-            display: flex;
-        }
-
-        .cart-content {
-            background: white;
-            border-radius: var(--border-radius);
-            padding: 2rem;
-            max-width: 600px;
-            width: 90%;
-            max-height: 80vh;
-            overflow-y: auto;
-        }
-
-        .cart-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 2rem;
-            border-bottom: 2px solid var(--bg-light);
-            padding-bottom: 1rem;
-        }
-
-        .cart-title {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: var(--text-dark);
-        }
-
-        .close-cart {
-            background: none;
-            border: none;
-            font-size: 2rem;
-            cursor: pointer;
-            color: var(--text-light);
-        }
-
-        .cart-items {
-            margin-bottom: 2rem;
-        }
-
-        .cart-item {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            padding: 1rem;
-            border-bottom: 1px solid var(--bg-light);
-        }
-
-        .cart-item-image {
-            width: 80px;
-            height: 80px;
-            object-fit: cover;
-            border-radius: var(--border-radius);
-        }
-
-        .cart-item-info {
-            flex: 1;
-        }
-
-        .cart-item-name {
-            font-weight: bold;
-            margin-bottom: 0.5rem;
-        }
-
-        .cart-item-price {
-            color: var(--primary-color);
-            font-weight: bold;
-        }
-
-        .cart-item-controls {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .remove-item {
-            background: var(--danger-color);
-            color: white;
-            border: none;
-            padding: 0.5rem;
-            border-radius: var(--border-radius);
-            cursor: pointer;
-            font-size: 0.8rem;
-        }
-
-        .cart-summary {
-            border-top: 2px solid var(--bg-light);
-            padding-top: 1rem;
-        }
-
-        .cart-total {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 1.3rem;
-            font-weight: bold;
-            margin-bottom: 1rem;
-        }
-
-        .checkout-btn {
-            width: 100%;
+        .fish-info {
             padding: 15px;
-            background: var(--success-color);
-            color: white;
-            border: none;
-            border-radius: var(--border-radius);
-            cursor: pointer;
-            font-size: 1.1rem;
+            text-align: center;
+        }
+        .fish-name {
             font-weight: bold;
-            transition: all 0.3s ease;
+            font-size: 1.3rem;
+            margin-bottom: 8px;
         }
-
-        .checkout-btn:hover {
-            background: #229954;
-            transform: translateY(-2px);
+        .fish-specialties {
+            font-style: italic;
+            font-size: 0.9rem;
+            color: #00796b;
+            margin-bottom: 15px;
         }
-
-        .empty-cart {
-            text-align: center;
-            padding: 3rem;
-            color: var(--text-light);
+        .quantity-control {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
         }
-
-        /* Footer */
-        footer {
-            background: rgba(255, 255, 255, 0.95);
-            padding: 2rem 0;
-            text-align: center;
-            margin-top: 4rem;
-        }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-
-            .hero p {
-                font-size: 1.1rem;
-            }
-
-            .product-grid {
-                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-                gap: 1rem;
-            }
-
-            .filter-controls {
-                flex-direction: column;
-                gap: 0.5rem;
-            }
-
-            .cart-content {
-                padding: 1rem;
-                width: 95%;
-            }
-
-            .cart-item {
-                flex-direction: column;
-                text-align: center;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .header-content {
-                padding: 0.5rem 0;
-            }
-
-            .logo {
-                font-size: 1.5rem;
-            }
-
-            .hero h1 {
-                font-size: 2rem;
-            }
-
-            .product-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        /* Loading Animation */
-        .loading {
-            display: inline-block;
-            width: 20px;
-            height: 20px;
-            border: 3px solid #f3f3f3;
-            border-top: 3px solid var(--primary-color);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .notification {
-            position: fixed;
-            top: 120px;
-            right: 20px;
-            padding: 1rem 2rem;
-            background: var(--success-color);
+        .qty-btn {
+            padding: 6px 12px;
+            border:none;
+            background-color: #004d40;
             color: white;
-            border-radius: var(--border-radius);
-            transform: translateX(400px);
-            transition: transform 0.3s ease;
-            z-index: 3000;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1rem;
+            user-select: none;
         }
-
-        .notification.show {
-            transform: translateX(0);
+        .qty-display {
+            min-width: 30px;
+            font-weight: bold;
+            font-size: 1.1rem;
         }
     </style>
 </head>
 <body>
     <header>
-        <div class="container">
-            <div class="header-content">
-                <a href="#" class="logo">🐟 FreshCatch</a>
-                <button class="cart-icon" onclick="toggleCart()">
-                    🛒 Cart
-                    <span class="cart-count" id="cartCount">0</span>
-                </button>
-            </div>
-        </div>
+        <h1>Ornamental Fish Showcase</h1>
+        <p>Beautiful fishes for your aquarium, from goldfish to fighter fish!</p>
     </header>
 
-    <main>
-        <div class="container">
-            <section class="hero">
-                <h1>Premium Fresh Fish Market</h1>
-                <p>Discover the finest selection of fresh fish, sourced directly from pristine waters</p>
-            </section>
-
-            <section class="filter-section">
-                <div class="filter-controls">
-                    <button class="filter-btn active" data-category="all">All Fish</button>
-                    <button class="filter-btn" data-category="saltwater">Saltwater</button>
-                    <button class="filter-btn" data-category="freshwater">Freshwater</button>
-                    <button class="filter-btn" data-category="premium">Premium</button>
-                    <button class="filter-btn" data-category="local">Local Catch</button>
-                </div>
-            </section>
-
-            <section class="product-grid" id="productGrid">
-                <!-- Products will be dynamically loaded here -->
-            </section>
-        </div>
-    </main>
-
-    <!-- Cart Modal -->
-    <div class="cart-modal" id="cartModal">
-        <div class="cart-content">
-            <div class="cart-header">
-                <h2 class="cart-title">Your Cart</h2>
-                <button class="close-cart" onclick="toggleCart()">&times;</button>
-            </div>
-            <div class="cart-items" id="cartItems">
-                <!-- Cart items will be dynamically loaded here -->
-            </div>
-            <div class="cart-summary">
-                <div class="cart-total">
-                    <span>Total: </span>
-                    <span id="cartTotal">₹0.00</span>
-                </div>
-                <button class="checkout-btn" onclick="checkout()">Proceed to Checkout</button>
-            </div>
-        </div>
-    </div>
-
-    <footer>
-        <div class="container">
-            <p>&copy; 2025 FreshCatch Fish Market. All rights reserved. | Contact: +91-9876543210</p>
-        </div>
-    </footer>
-
-    <div class="notification" id="notification">
-        Item added to cart!
-    </div>
+    <section class="fish-grid" id="fishGrid">
+        <!-- Fish cards will load here -->
+    </section>
 
     <script>
-        // Fish products data
-        const fishProducts = [
+        const fishes = [
             {
                 id: 1,
-                name: "Fresh Salmon",
-                price: 850,
-                image: "https://images.unsplash.com/photo-1544943910-4c1dc44aab44?w=400&h=300&fit=crop",
-                description: "Premium Atlantic salmon, rich in omega-3 fatty acids",
-                category: "saltwater",
-                specialties: ["High Omega-3", "Premium Quality", "Wild Caught", "Heart Healthy"]
+                name: "Goldfish",
+                image: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80",
+                specialties: "Bright colors, peaceful, easy to keep",
             },
             {
                 id: 2,
-                name: "King Fish (Surmai)",
-                price: 650,
-                image: "https://images.unsplash.com/photo-1544943910-4c1dc44aab44?w=400&h=300&fit=crop",
-                description: "Fresh king fish, perfect for grilling and curry preparations",
-                category: "saltwater",
-                specialties: ["Low Fat", "High Protein", "Local Favorite", "Versatile Cooking"]
+                name: "Betta Fish (Fighter Fish)",
+                image: "https://images.unsplash.com/photo-1574169208507-843761748856?auto=format&fit=crop&w=400&q=80",
+                specialties: "Vibrant fins, territorial, low maintenance",
             },
             {
                 id: 3,
-                name: "Pomfret",
-                price: 750,
-                image: "https://images.unsplash.com/photo-1544943910-4c1dc44aab44?w=400&h=300&fit=crop",
-                description: "Silver pomfret with delicate flavor and tender meat",
-                category: "saltwater",
-                specialties: ["Delicate Flavor", "Tender Meat", "Premium", "Party Special"]
+                name: "Koi Fish",
+                image: "https://images.unsplash.com/photo-1556905055-8f358a7a47b4?auto=format&fit=crop&w=400&q=80",
+                specialties: "Large size, colorful patterns, pond friendly",
             },
             {
                 id: 4,
-                name: "Rohu Fish",
-                price: 280,
-                image: "https://images.unsplash.com/photo-1544943910-4c1dc44aab44?w=400&h=300&fit=crop",
-                description: "Fresh water rohu fish, ideal for traditional Indian preparations",
-                category: "freshwater",
-                specialties: ["Traditional Favorite", "Affordable", "Local", "Family Size"]
-            },
-            {
-                id: 5,
-                name: "Prawns Large",
-                price: 950,
-                image: "https://images.unsplash.com/photo-1565680018434-b513d5e5fd47?w=400&h=300&fit=crop",
-                description: "Fresh large prawns, perfect for biryanis and curries",
-                category: "saltwater",
-                specialties: ["Large Size", "Fresh Catch", "Sweet Taste", "Premium Seafood"]
-            },
-            {
-                id: 6,
-                name: "Tuna Steaks",
-                price: 1200,
-                image: "https://images.unsplash.com/photo-1544943910-4c1dc44aab44?w=400&h=300&fit=crop",
-                description: "Premium tuna steaks, sushi grade quality",
-                category: "premium",
-                specialties: ["Sushi Grade", "High Protein", "Premium Quality", "Restaurant Style"]
-            },
-            {
-                id: 7,
-                name: "Mackerel (Bangda)",
-                price: 320,
-                image: "https://images.unsplash.com/photo-1544943910-4c1dc44aab44?w=400&h=300&fit=crop",
-                description: "Fresh mackerel fish, rich in healthy fats",
-                category: "saltwater",
-                specialties: ["Rich in Omega-3", "Affordable", "Quick Cook", "Healthy Choice"]
-            },
-            {
-                id: 8,
-                name: "Catla Fish",
-                price: 350,
-                image: "https://images.unsplash.com/photo-1544943910-4c1dc44aab44?w=400&h=300&fit=crop",
-                description: "Fresh water catla fish, perfect for Bengali style preparations",
-                category: "freshwater",
-                specialties: ["Bengali Special", "Large Cuts", "Sweet Flavor", "Traditional"]
-            },
-            {
-                id: 9,
-                name: "Red Snapper",
-                price: 800,
-                image: "https://images.unsplash.com/photo-1544943910-4c1dc44aab44?w=400&h=300&fit=crop",
-                description: "Fresh red snapper with firm texture and mild flavor",
-                category: "premium",
-                specialties: ["Firm Texture", "Mild Flavor", "Premium", "Grilling Perfect"]
-            },
-            {
-                id: 10,
-                name: "Local Tilapia",
-                price: 220,
-                image: "https://images.unsplash.com/photo-1544943910-4c1dc44aab44?w=400&h=300&fit=crop",
-                description: "Farm fresh tilapia, clean and healthy",
-                category: "local",
-                specialties: ["Farm Fresh", "Clean", "Affordable", "Family Friendly"]
-            },
-            {
-                id: 11,
-                name: "Crab Large",
-                price: 1100,
-                image: "https://images.unsplash.com/photo-1544943910-4c1dc44aab44?w=400&h=300&fit=crop",
-                description: "Fresh large crabs, perfect for special occasions",
-                category: "premium",
-                specialties: ["Large Size", "Special Occasion", "Sweet Meat", "Premium Seafood"]
-            },
-            {
-                id: 12,
-                name: "Hilsa Fish",
-                price: 1500,
-                image: "https://images.unsplash.com/photo-1544943910-4c1dc44aab44?w=400&h=300&fit=crop",
-                description: "Premium hilsa fish, the king of Bengali cuisine",
-                category: "premium",
-                specialties: ["King of Fish", "Bengali Delicacy", "Premium", "Festival Special"]
+                name: "Guppy",
+                image: "https://images.unsplash.com/photo-1571997478770-cca1c13c7ff0?auto=format&fit=crop&w=400&q=80",
+                specialties: "Small, active, comes in lots of colors",
             }
         ];
 
-        // Cart management
-        let cart = JSON.parse(localStorage.getItem('fishCart')) || [];
-        let quantities = {};
+        function createFishCard(fish) {
+            let quantity = 1;
+            const card = document.createElement('div');
+            card.className = 'fish-card';
 
-        // Initialize quantities
-        fishProducts.forEach(product => {
-            quantities[product.id] = 1;
-        });
-
-        // DOM elements
-        const productGrid = document.getElementById('productGrid');
-        const cartModal = document.getElementById('cartModal');
-        const cartItems = document.getElementById('cartItems');
-        const cartCount = document.getElementById('cartCount');
-        const cartTotal = document.getElementById('cartTotal');
-        const notification = document.getElementById('notification');
-
-        // Initialize the app
-        document.addEventListener('DOMContentLoaded', function() {
-            displayProducts(fishProducts);
-            updateCartDisplay();
-            setupFilterButtons();
-        });
-
-        // Display products
-        function displayProducts(products) {
-            productGrid.innerHTML = products.map(product => `
-                <div class="product-card" data-category="${product.category}">
-                    <img src="${product.image}" alt="${product.name}" class="product-image">
-                    <div class="product-info">
-                        <h3 class="product-name">${product.name}</h3>
-                        <div class="product-price">₹${product.price}/kg</div>
-                        <p class="product-description">${product.description}</p>
-                        <div class="product-specialties">
-                            ${product.specialties.map(specialty => 
-                                `<span class="specialty-tag">${specialty}</span>`
-                            ).join('')}
-                        </div>
-                        <div class="quantity-controls">
-                            <button class="quantity-btn" onclick="changeQuantity(${product.id}, -1)">-</button>
-                            <span class="quantity-display" id="qty-${product.id}">${quantities[product.id]}</span>
-                            <button class="quantity-btn" onclick="changeQuantity(${product.id}, 1)">+</button>
-                        </div>
-                        <button class="add-to-cart-btn" onclick="addToCart(${product.id})">
-                            Add to Cart - ₹${product.price * quantities[product.id]}
-                        </button>
+            card.innerHTML = `
+                <img src="${fish.image}" alt="${fish.name}" />
+                <div class="fish-info">
+                    <div class="fish-name">${fish.name}</div>
+                    <div class="fish-specialties">${fish.specialties}</div>
+                    <div class="quantity-control">
+                        <button class="qty-btn" aria-label="Decrease quantity">-</button>
+                        <span class="qty-display">${quantity}</span>
+                        <button class="qty-btn" aria-label="Increase quantity">+</button>
                     </div>
                 </div>
-            `).join('');
-        }
+            `;
 
-        // Setup filter buttons
-        function setupFilterButtons() {
-            const filterButtons = document.querySelectorAll('.filter-btn');
-            filterButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    // Remove active class from all buttons
-                    filterButtons.forEach(btn => btn.classList.remove('active'));
-                    // Add active class to clicked button
-                    this.classList.add('active');
-                    
-                    const category = this.dataset.category;
-                    filterProducts(category);
-                });
+            const decreaseBtn = card.querySelectorAll('.qty-btn')[0];
+            const increaseBtn = card.querySelectorAll('.qty-btn')[1];
+            const qtyDisplay = card.querySelector('.qty-display');
+
+            decreaseBtn.addEventListener('click', () => {
+                if (quantity > 1) {
+                    quantity--;
+                    qtyDisplay.textContent = quantity;
+                }
             });
-        }
 
-        // Filter products
-        function filterProducts(category) {
-            const filteredProducts = category === 'all' 
-                ? fishProducts 
-                : fishProducts.filter(product => product.category === category);
-            
-            displayProducts(filteredProducts);
-        }
-
-        // Change quantity
-        function changeQuantity(productId, change) {
-            quantities[productId] = Math.max(1, quantities[productId] + change);
-            document.getElementById(`qty-${productId}`).textContent = quantities[productId];
-            
-            // Update the button price
-            const product = fishProducts.find(p => p.id === productId);
-            const button = document.querySelector(`[onclick="addToCart(${productId})"]`);
-            if (button) {
-                button.innerHTML = `Add to Cart - ₹${product.price * quantities[productId]}`;
-            }
-        }
-
-        // Add to cart
-        function addToCart(productId) {
-            const product = fishProducts.find(p => p.id === productId);
-            const quantity = quantities[productId];
-            
-            const existingItem = cart.find(item => item.id === productId);
-            
-            if (existingItem) {
-                existingItem.quantity += quantity;
-            } else {
-                cart.push({
-                    ...product,
-                    quantity: quantity
-                });
-            }
-            
-            localStorage.setItem('fishCart', JSON.stringify(cart));
-            updateCartDisplay();
-            showNotification(`${product.name} added to cart!`);
-        }
-
-        // Remove from cart
-        function removeFromCart(productId) {
-            cart = cart.filter(item => item.id !== productId);
-            localStorage.setItem('fishCart', JSON.stringify(cart));
-            updateCartDisplay();
-            updateCartModal();
-        }
-
-        // Update cart quantity
-        function updateCartQuantity(productId, newQuantity) {
-            if (newQuantity <= 0) {
-                removeFromCart(productId);
-                return;
-            }
-            
-            const item = cart.find(item => item.id === productId);
-            if (item) {
-                item.quantity = newQuantity;
-                localStorage.setItem('fishCart', JSON.stringify(cart));
-                updateCartDisplay();
-                updateCartModal();
-            }
-        }
-
-        // Update cart display
-        function updateCartDisplay() {
-            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-            const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-            
-            cartCount.textContent = totalItems;
-            cartTotal.textContent = `₹${totalPrice.toFixed(2)}`;
-            
-            if (cartModal.classList.contains('show')) {
-                updateCartModal();
-            }
-        }
-
-        // Update cart modal
-        function updateCartModal() {
-            if (cart.length === 0) {
-                cartItems.innerHTML = `
-                    <div class="empty-cart">
-                        <h3>Your cart is empty</h3>
-                        <p>Add some fresh fish to get started!</p>
-                    </div>
-                `;
-                return;
-            }
-
-            cartItems.innerHTML = cart.map(item => `
-                <div class="cart-item">
-                    <img src="${item.image}" alt="${item.name}" class="cart-item-image">
-                    <div class="cart-item-info">
-                        <div class="cart-item-name">${item.name}</div>
-                        <div class="cart-item-price">₹${item.price}/kg</div>
-                    </div>
-                    <div class="cart-item-controls">
-                        <button class="quantity-btn" onclick="updateCartQuantity(${item.id}, ${item.quantity - 1})">-</button>
-                        <span class="quantity-display">${item.quantity}</span>
-                        <button class="quantity-btn" onclick="updateCartQuantity(${item.id}, ${item.quantity + 1})">+</button>
-                        <button class="remove-item" onclick="removeFromCart(${item.id})">Remove</button>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        // Toggle cart modal
-        function toggleCart() {
-            cartModal.classList.toggle('show');
-            if (cartModal.classList.contains('show')) {
-                updateCartModal();
-                document.body.style.overflow = 'hidden';
-            } else {
-                document.body.style.overflow = 'auto';
-            }
-        }
-
-        // Checkout function
-        function checkout() {
-            if (cart.length === 0) {
-                alert('Your cart is empty!');
-                return;
-            }
-            
-            const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-            const orderSummary = cart.map(item => 
-                `${item.name} - ${item.quantity}kg - ₹${item.price * item.quantity}`
-            ).join('\n');
-            
-            const message = `Order Summary:\n${orderSummary}\n\nTotal: ₹${total}\n\nThank you for your order! We'll contact you shortly for delivery details.`;
-            
-            alert(message);
-            
-            // Clear cart after successful checkout
-            cart = [];
-            localStorage.removeItem('fishCart');
-            updateCartDisplay();
-            toggleCart();
-        }
-
-        // Show notification
-        function showNotification(message) {
-            notification.textContent = message;
-            notification.classList.add('show');
-            setTimeout(() => {
-                notification.classList.remove('show');
-            }, 3000);
-        }
-
-        // Close modal when clicking outside
-        cartModal.addEventListener('click', function(e) {
-            if (e.target === cartModal) {
-                toggleCart();
-            }
-        });
-
-        // Keyboard navigation
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape' && cartModal.classList.contains('show')) {
-                toggleCart();
-            }
-        });
-
-        // Search functionality (bonus feature)
-        function searchProducts(query) {
-            const filteredProducts = fishProducts.filter(product => 
-                product.name.toLowerCase().includes(query.toLowerCase()) ||
-                product.description.toLowerCase().includes(query.toLowerCase()) ||
-                product.specialties.some(specialty => 
-                    specialty.toLowerCase().includes(query.toLowerCase())
-                )
-            );
-            displayProducts(filteredProducts);
-        }
-
-        // Auto-save cart periodically
-        setInterval(() => {
-            localStorage.setItem('fishCart', JSON.stringify(cart));
-        }, 30000);
-
-        // Service Worker registration for PWA (optional)
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', function() {
-                navigator.serviceWorker.register('/sw.js')
-                    .then(function(registration) {
-                        console.log('ServiceWorker registration successful');
-                    })
-                    .catch(function(err) {
-                        console.log('ServiceWorker registration failed');
-                    });
+            increaseBtn.addEventListener('click', () => {
+                quantity++;
+                qtyDisplay.textContent = quantity;
             });
+
+            return card;
         }
+
+        // Load fish cards into the grid
+        const fishGrid = document.getElementById('fishGrid');
+        fishes.forEach(fish => {
+            fishGrid.appendChild(createFishCard(fish));
+        });
     </script>
 </body>
 </html>
